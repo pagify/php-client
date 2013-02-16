@@ -5,7 +5,7 @@ Pagify is a web-based document design and generation service, that integrates ni
 
 For further information on uses of Pagify, please visit http://pagify.io
 
-This client library helps you to integrate Pagify with your ruby applications with minimum coding effort. Before using this library please ensure that you have a valid Pagify service account, and have noted down your API key and secret. 
+This client library helps you to integrate Pagify with your PHP applications with minimum coding effort. Before using this library please ensure that you have a valid Pagify service account, and have noted down your API key and secret. 
 
 Install the library by first cloning the repository or downloading it as a tar ball. Then copy the ```pagifyio.php``` to your working directory, and ensure that the PHP Curl extension is enabled.
 
