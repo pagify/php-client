@@ -144,7 +144,7 @@ array (
 <b>Singe-value series chart(pie, doughnut): </b>
 An array of positive integer values.
 ```php
-("chart_single_value_field" => (20, 30, 40))
+array ("chart_single_value_field" => (20, 30, 40))
 ```
 <b>XY chart(point): </b>
 A matrix of associative arrays supplied as nested array. Each hash is a pair of x, y values
