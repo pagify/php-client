@@ -26,11 +26,14 @@
 			return json_decode($this->request(""));
 		}
 		
-		public function createTemplate() {
+		public function createTemplate($name) {
+		    if ($name == null || $name == "")
+                throw "Please supply a name";
 			$this->options["path"] = "/api/templates";
 			$this->options["method"] = "POST";
 			$this->options["acceptType"] = "application/json";
-			return json_decode($this->request(""));
+			$requestData = array("template_name" => $name);
+            return json_decode($this->request(json_encode($requestData)));
 		}
 		
 		public function editTemplate($templateID) {
@@ -48,10 +51,13 @@
 		}
 		
 		public function generatePDF($templateID, $data) {
+		    if ($templateID == null || $templateID == "")
+                throw "Please supply a templateID";
 			$this->options["path"] = "/api/templates/". $templateID . "/generate_pf";
 			$this->options["method"] = "POST";
 			$this->options["acceptType"] = "application/json";
-			$tmp = $this->request(json_encode($data));
+			$requestData = array("data" => $data);
+			$tmp = $this->request(json_encode($requestData));
 			try {
 				$tmp1 = json_decode($tmp);
 			} catch(Exception $e) {
