@@ -112,6 +112,7 @@ data = array (
           "text_field" => "Hello World!",
           "image_field" => "http://abc.com/xyz.png",
           "chart_multi_value_field" => (
+                          ("First", "Second", "Third"),
                           (20, 40, 30),
                           (50, 60, 10)
                        ),
@@ -122,6 +123,9 @@ data = array (
                        )
         )
 template = pagify.generatePDF("71d620fc773a11e288cce006e61619ba", data);
+
+
+Note: A successful response is of binary type, where as a failed response will be an associative array containing error message and status code. 
 ```
 If the function call is successful the response is in binary format which can be saved as a PDF using ```File``` class.
 
@@ -136,6 +140,7 @@ A matrix of positive integer values supplied as nested array.
 ```php
 array (
   "chart_multi_value_field" => (
+                                ("First", "Second", "Third"),
                                 (20, 40, 30),
                                 (50, 60, 10)
                              )
