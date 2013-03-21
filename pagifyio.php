@@ -57,13 +57,12 @@
 			$this->options["method"] = "POST";
 			$this->options["acceptType"] = "application/json";
 			$requestData = array("data" => $data);
-			$tmp = $this->request(json_encode($requestData));
-			try {
-				$tmp1 = json_decode($tmp);
-			} catch(Exception $e) {
-				return $tmp;
-			}
-			return $tmp1;
+            $tmp = $this->request(json_encode($requestData));
+            $tmp1 = json_decode($tmp);
+            if ($tmp1 != null)
+                return $tmp1;
+            else
+                return $tmp;
 		}
 		
 		private function request($data) {
