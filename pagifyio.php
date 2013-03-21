@@ -53,7 +53,7 @@
 		public function generatePDF($templateID, $data) {
 		    if ($templateID == null || $templateID == "")
                 throw "Please supply a templateID";
-			$this->options["path"] = "/api/templates/". $templateID . "/generate_pf";
+			$this->options["path"] = "/api/templates/". $templateID . "/generate_pdf";
 			$this->options["method"] = "POST";
 			$this->options["acceptType"] = "application/json";
 			$requestData = array("data" => $data);

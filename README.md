@@ -31,7 +31,7 @@ Once initailized the ```pagify``` object can be used to perform all the above li
 A list of all templates that have either been created using Pagify dashboard or through the public API can be retrieved through ```listTemplates``` call.
 
 ```php
-templates = pagify.listTemplates();
+templates = pagify->listTemplates();
 ```
 Here is a sample response for a successful call:
 ```php
@@ -52,7 +52,7 @@ The response contains a hash with template ids as keys and template names as val
 Create a blank templates using ```createTemplate``` function call.
 
 ```php
-template = pagify.createTemplate();
+template = pagify->createTemplate();
 ```
 Here is a sample successful response:
 ```php
@@ -69,11 +69,11 @@ The response contains the template id for the new template.
 -------------------
 To delete a template use ```deleteTemplate``` function call.
 ```php
-template = pagify.deleteTemplate(<template_id_as_string>);
+template = pagify->deleteTemplate(<template_id_as_string>);
 ```
 For example if the template id is ``` "71d620fc773a11e288cce006e61619ba" ```
 ```php
-response = pagify.deleteTemplate("71d620fc773a11e288cce006e61619ba");
+response = pagify->deleteTemplate("71d620fc773a11e288cce006e61619ba");
 ```
 On a successful call you should get following response:
 ```php
@@ -87,11 +87,11 @@ array (
 -----------------
 The API allows to generate a link to edit a specified template, without user actually logging in to Pagify service. The user must visit the link with 30 minutes time, otherwise the link will expire. Once the user visits the link the session validity increases upto 1 day. After that the developer must request a new link to edit the template. You can generate the link by calling ```editTemplate``` function
 ```php
-template = pagify.editTemplate(<template_id_as_string>);
+template = pagify->editTemplate(<template_id_as_string>);
 ```
 For example
 ```php
-template = pagify.editTemplate("71d620fc773a11e288cce006e61619ba");
+template = pagify->editTemplate("71d620fc773a11e288cce006e61619ba");
 ```
 If the template is valid a typical successful response will be as follows:
 ```php
@@ -104,7 +104,7 @@ array (
 ----------------
 To generate a PDF use ```generatePDF``` function call. The function call requires a valid template id and data.
 ```php
-template = pagify.generatePDF(<template_id_as_string>, <data_as_associative_array>);
+template = pagify->generatePDF(<template_id_as_string>, <data_as_associative_array>);
 ```
 For example
 ```php
@@ -122,7 +122,7 @@ data = array (
                           (("x": 10, "y": 30), ("x": 20, "y": 30), ("x": 80, "y": 30)),
                        )
         )
-template = pagify.generatePDF("71d620fc773a11e288cce006e61619ba", data);
+template = pagify->generatePDF("71d620fc773a11e288cce006e61619ba", data);
 
 
 Note: A successful response is of binary type, where as a failed response will be an associative array containing error message and status code. 
