@@ -20,9 +20,9 @@ Using this library you can;
 Before calling any action or function make sure to initialize the client using your api secret and api key:
 
 ```php
-include('pagify');
+include_once 'pagifyio.php';
 
-pagify = new Pagify('<api-key>','<api-secret>');
+$pagify = new PagifyIO('<api-key>','<api-secret>');
 ```
 Once initailized the ```pagify``` object can be used to perform all the above listed actions.
 
@@ -31,14 +31,14 @@ Once initailized the ```pagify``` object can be used to perform all the above li
 A list of all templates that have either been created using Pagify dashboard or through the public API can be retrieved through ```listTemplates``` call.
 
 ```php
-templates = pagify->listTemplates();
+$templates = $pagify->listTemplates();
 ```
 Here is a sample response for a successful call:
 ```php
 array (
   "statusCode" => 200, 
   "message" => "Here is the list of the templates.", 
-  "templateIds" => (
+  "templateIds" => array(
     "71d620fc773a11e288cce006e61619ba" => "First Template",
     "89afs89fff88s8s8f8cce006e61619ba" => "Second Template"
   )
@@ -52,7 +52,7 @@ The response contains a hash with template ids as keys and template names as val
 Create a blank templates using ```createTemplate``` function call.
 
 ```php
-template = pagify->createTemplate();
+$template = $pagify->createTemplate();
 ```
 Here is a sample successful response:
 ```php
@@ -69,11 +69,11 @@ The response contains the template id for the new template.
 -------------------
 To delete a template use ```deleteTemplate``` function call.
 ```php
-template = pagify->deleteTemplate(<template_id_as_string>);
+$template = $pagify->deleteTemplate(<template_id_as_string>);
 ```
 For example if the template id is ``` "71d620fc773a11e288cce006e61619ba" ```
 ```php
-response = pagify->deleteTemplate("71d620fc773a11e288cce006e61619ba");
+$response = $pagify->deleteTemplate("71d620fc773a11e288cce006e61619ba");
 ```
 On a successful call you should get following response:
 ```php
@@ -87,11 +87,11 @@ array (
 -----------------
 The API allows to generate a link to edit a specified template, without user actually logging in to Pagify service. The user must visit the link with 30 minutes time, otherwise the link will expire. Once the user visits the link the session validity increases upto 1 day. After that the developer must request a new link to edit the template. You can generate the link by calling ```editTemplate``` function
 ```php
-template = pagify->editTemplate(<template_id_as_string>);
+$template = $pagify->editTemplate(<template_id_as_string>);
 ```
 For example
 ```php
-template = pagify->editTemplate("71d620fc773a11e288cce006e61619ba");
+$template = $pagify->editTemplate("71d620fc773a11e288cce006e61619ba");
 ```
 If the template is valid a typical successful response will be as follows:
 ```php
@@ -104,28 +104,37 @@ array (
 ----------------
 To generate a PDF use ```generatePDF``` function call. The function call requires a valid template id and data.
 ```php
-template = pagify->generatePDF(<template_id_as_string>, <data_as_associative_array>);
+$template = pagify->generatePDF(<template_id_as_string>, <data_as_associative_array>);
 ```
 For example
 ```php
-data = array (
-          "text_field" => "Hello World!",
-          "image_field" => "http://abc.com/xyz.png",
-          "chart_multi_value_field" => (
-                          ("First", "Second", "Third"),
-                          (20, 40, 30),
-                          (50, 60, 10)
-                       ),
-          "chart_single_value_field": (20, 30, 40),
-          "chart_xy_field": (
-                          (("x": 20, "y": 40), ("x": 10, "y": 30), ("x": 70, "y": 50)),
-                          (("x": 10, "y": 30), ("x": 20, "y": 30), ("x": 80, "y": 30)),
-                       )
-        )
-template = pagify->generatePDF("71d620fc773a11e288cce006e61619ba", data);
+$data = array (
+  "text_field" => "Hello World!",
+  "image_field" => "http://abc.com/xyz.png",
+  "chart_multi_value_field" => array(
+    array("First", "Second", "Third"),
+    array(20, 40, 30),
+    array(50, 60, 10)
+  ),
+  "chart_single_value_field" => array(20, 30, 40),
+  "chart_xy_field" => array(
+    array(
+      array("x" => 20, "y" => 40),
+      array("x" => 10, "y" => 30),
+      array("x" => 70, "y" => 50)
+    ),
+    array(
+      array("x" => 10, "y" => 30),
+      array("x" => 20, "y" => 30),
+      array("x" => 80, "y" => 30)
+    )
+  )
+);
 
+$template = pagify->generatePDF("71d620fc773a11e288cce006e61619ba", $data);
 
-Note: A successful response is of binary type, where as a failed response will be an associative array containing error message and status code. 
+//Note: A successful response is of binary type, where as a failed response
+//      will be an associative array containing error message and status code. 
 ```
 If the function call is successful the response is in binary format which can be saved as a PDF using ```File``` class.
 
@@ -139,26 +148,34 @@ The data supplied to populate the template is a hash containing field names and 
 A matrix of positive integer values supplied as nested array.
 ```php
 array (
-  "chart_multi_value_field" => (
-                                ("First", "Second", "Third"),
-                                (20, 40, 30),
-                                (50, 60, 10)
-                             )
+  "chart_multi_value_field" => array(
+    array("First", "Second", "Third"),
+    array(20, 40, 30),
+    array(50, 60, 10)
+  )
 )
 ```
 <b>Singe-value series chart(pie, doughnut): </b>
 An array of positive integer values.
 ```php
-array ("chart_single_value_field" => (20, 30, 40))
+array ("chart_single_value_field" => array(20, 30, 40))
 ```
 <b>XY chart(point): </b>
 A matrix of associative arrays supplied as nested array. Each hash is a pair of x, y values
 ```php
 array (
-  "chart_xy_field" => (
-                        (("x" => 20, "y" => 40}, ("x" => 10, "y" => 30), ("x" => 70, "y" => 50)),
-                        (("x" => 10, "y" => 30), ("x" => 20, "y" => 30), ("x" => 80, "y" => 30)),
-                    )
+  "chart_xy_field" => array(
+    array(
+      array("x" => 20, "y" => 40),
+      array("x" => 10, "y" => 30),
+      array("x" => 70, "y" => 50)
+    ),
+    array(
+      array("x" => 10, "y" => 30),
+      array("x" => 20, "y" => 30),
+      array("x" => 80, "y" => 30)
+    )
+  )
 )
 ```
 
